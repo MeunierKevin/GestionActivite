@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>
+      {% block title %}Mon Actitivité - Tableau De Bord{% endblock %}
+    </title>
+
+    {% block stylesheets %}
+      <link rel="stylesheet" href="https://bootswatch.com/4/litera/bootstrap.min.css">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+      <link rel="stylesheet" href="{{asset('css/style.css')}}">
+    {% endblock %}
+  </head>
+  <body>
+
+    <!-- The sidebar -->
+    <div class="sidebar">
+      <a href="{{path('bord')}}">
+        <img src="{{asset('/images/logo.png')}}" alt="logo" class="logo">
+      </a>
+      <a href="{{path('bord')}}" class="py-3">
+        <i class="fas fa-chart-line"></i>
+        Bord</a>
+      <a href="{{path('admin_projet')}}" class="py-3">
+        <i class="fas fa-tasks"></i>
+        Projets</a>
+      <a href="#clients" class="py-3">
+        <i class="fa fa-user"></i>
+        Clients</a>
+      <a href="#devis" class="py-3">
+        <i class="fas fa-file-alt"></i>
+        Devis</a>
+    </div>
+    <h1 class="pl-3 bg-secondary text-white pb-2">
+      {% block titrePage %}Bienvenue sur votre tableau de bord{% endblock %}
+    </h1>
+    {% block body %}{% endblock %}
+  </body>
+</html>
