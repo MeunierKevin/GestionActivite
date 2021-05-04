@@ -1,0 +1,80 @@
+{% extends "admin/base.html.twig" %}
+
+{% block title %}Mon Actitivité - Mes Clients{% endblock %}
+
+{% block titrePage %}Mes clients{% endblock %}
+
+{% block body %}
+  {% for message in app.flashes('success') %}
+    <div class="alert alert-success">
+      {{message}}
+    </div>
+  {% endfor %}
+  <div class="container-fluid mt-3">
+    <a href="{{path('admin_projet_creation')}}" class="btn btn-success">Ajouter</a>
+    <table id="" class="table table-hover mt-2">
+      <thead>
+        <tr>
+          <th scope="col">Raison Sociale</th>
+          <th scope="col">Contact</th>
+          <th scope="col">Téléphone</th>
+          <th scope="col">Email</th>
+          <th scope="col">Modifier</th>
+          <th scope="col">Supprimer</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for client in clients %}
+          <tr class="table-light">
+            <th scope="row">
+              <a href="#">{{client.nomEntreprise}}</a>
+            </th>
+            <td>{{client.nomContact ~ '  ' ~ client.prenomContact}}</td>
+            <td>{{client.telephone}}</td>
+            <td>{{client.email}}</td>
+            <td>
+              <a href="#" class="btn btn-warning">
+                <i class="fas fa-edit"></i>
+              </a>
+            </td>
+            <td>
+              <form action="#" method="post" onsubmit="return confirm('Etes-vous sûr de vouloir supprimer ce client ?')">
+                <input type="hidden" name="_method" value="delete">
+                <input type="hidden" name="_token" value="">
+                <button type="submit" class="btn btn-danger">
+                  <i class="fas fa-trash-alt"></i>
+                </button>
+              </form>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <div class="d-flex justify-content-center">
+      <ul class="pagination">
+        <li class="page-item disabled">
+          <a class="page-link" href="#">&laquo;</a>
+        </li>
+        <li class="page-item active">
+          <a class="page-link" href="#">1</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="#">2</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="#">3</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="#">4</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="#">5</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="#">&raquo;</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+{% endblock %}
