@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * @ORM\Entity(repositoryClass=ProjetRepository::class)
+ * @Vich\Uploadable
  */
 class Projet
 {
@@ -89,10 +90,9 @@ class Projet
     private $dateMiseEnLigne;
 
     /**
-     * @ORM\OneToMany(targetEntity=Image::class, mappedBy="projet")
+     * @ORM\OneToMany(targetEntity=Image::class, mappedBy="projet",cascade={"persist"}) 
      */
     private $images;
-
 
     /**
      * @ORM\ManyToOne(targetEntity=Client::class, inversedBy="projets")

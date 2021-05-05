@@ -1,7 +1,8 @@
 {% extends "admin/base.html.twig" %}
 
 {% block title %}Mon Actitivité - Mes Clients{% endblock %}
-
+{% block stylesheets %}
+  <link rel="stylesheet" href="http://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">{% endblock %}
 {% block titrePage %}Mes clients{% endblock %}
 
 {% block body %}
@@ -11,8 +12,11 @@
     </div>
   {% endfor %}
   <div class="container-fluid mt-3">
-    <a href="{{path('admin_projet_creation')}}" class="btn btn-success">Ajouter</a>
-    <table id="" class="table table-hover mt-2">
+    <div class="mb-3">
+      <a href="{{path('admin_client_creation')}}" class="btn btn-success font-weight-bold">Ajouter</a>
+      <a href="" class="btn btn-info font-weight-bold">Exporter</a>
+    </div>
+    <table id="myTable" class="table table-hover mt-2">
       <thead>
         <tr>
           <th scope="col">Raison Sociale</th>
@@ -27,20 +31,20 @@
         {% for client in clients %}
           <tr class="table-light">
             <th scope="row">
-              <a href="#">{{client.nomEntreprise}}</a>
+              <a href="{{path('admin_client_modification', {'id': client.id})}}">{{client.nomEntreprise}}</a>
             </th>
             <td>{{client.nomContact ~ '  ' ~ client.prenomContact}}</td>
             <td>{{client.telephone}}</td>
             <td>{{client.email}}</td>
             <td>
-              <a href="#" class="btn btn-warning">
+              <a href="{{path('admin_client_modification', {'id': client.id})}}" class="btn btn-warning">
                 <i class="fas fa-edit"></i>
               </a>
             </td>
             <td>
-              <form action="#" method="post" onsubmit="return confirm('Etes-vous sûr de vouloir supprimer ce client ?')">
+              <form action="{{path('admin_client_suppression', {'id': client.id})}}" method="post" onsubmit="return confirm('Etes-vous sûr de vouloir supprimer ce client ?')">
                 <input type="hidden" name="_method" value="delete">
-                <input type="hidden" name="_token" value="">
+                <input type="hidden" name="_token" value="{{csrf_token('SUP' ~ client.id) }}">
                 <button type="submit" class="btn btn-danger">
                   <i class="fas fa-trash-alt"></i>
                 </button>
@@ -50,31 +54,17 @@
         {% endfor %}
       </tbody>
     </table>
-    <div class="d-flex justify-content-center">
-      <ul class="pagination">
-        <li class="page-item disabled">
-          <a class="page-link" href="#">&laquo;</a>
-        </li>
-        <li class="page-item active">
-          <a class="page-link" href="#">1</a>
-        </li>
-        <li class="page-item">
-          <a class="page-link" href="#">2</a>
-        </li>
-        <li class="page-item">
-          <a class="page-link" href="#">3</a>
-        </li>
-        <li class="page-item">
-          <a class="page-link" href="#">4</a>
-        </li>
-        <li class="page-item">
-          <a class="page-link" href="#">5</a>
-        </li>
-        <li class="page-item">
-          <a class="page-link" href="#">&raquo;</a>
-        </li>
-      </ul>
-    </div>
   </div>
-
+{% endblock %}
+{% block javascripts %}
+  <script src="http://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      $('#myTable').DataTable({
+        language: {
+          url: "http://cdn.datatables.net/plug-ins/1.10.24/i18n/French.json"
+        }
+      });
+    });
+  </script>
 {% endblock %}

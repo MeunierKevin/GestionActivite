@@ -2,7 +2,9 @@
 
 namespace App\Controller\admin;
 
+use App\Entity\Image;
 use App\Entity\Projet;
+use App\Form\ImageType;
 use App\Form\ProjetType;
 use App\Repository\ProjetRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -10,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class AdminProjetController extends AbstractController
 {
@@ -29,14 +32,32 @@ class AdminProjetController extends AbstractController
      * @Route("/admin/projet/{id}", name="admin_projet_modification", methods="GET|POST")
      */
     public function ajouEtmodifProjet(Projet $projet = null, Request $request, EntityManagerInterface $entityManager){
-
         if(!$projet){
             $projet = new Projet();
         }
-        $form = $this->createForm(ProjetType::class,$projet);
+        $form = $this->createForm(ProjetType::class,$projet);       
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
+            //on récupère les images transmises
+            $images = $form->get('images')->getData();
+            //on boucle sur les images
+            foreach($images as $image){
+                // on génère un nouveau nom de fichier
+                $fichier = md5(uniqid()).'.'.$image->guessExtension();
+
+                //on copie le fichier dans le dossier uploads
+                $image->move(
+                    $this->getParameter('images_directory'),
+                    $fichier
+                );
+
+                //on stocke l'image dans la base de données(son url)
+                $img = new Image();
+                $img->setUrlImage($fichier);
+                $projet->addImage($img);
+            }
+
             $modif = $projet->getId() !==null;
             $entityManager->persist($projet);
             $entityManager->flush();
@@ -46,7 +67,7 @@ class AdminProjetController extends AbstractController
         return $this->render("admin/projet/modifEtAjoutProjet.html.twig",[
             "projet"=>$projet,
             "form"=>$form->createView(),
-            "isModification"=>$projet->getId() !==null
+            "isModification"=>$projet->getId() !==null,
         ]);
     }
         /**
@@ -59,5 +80,26 @@ class AdminProjetController extends AbstractController
                 $this->addFlash("success", "La suppression a été effectué");
                 return $this->redirectToRoute("admin_projet");
             }
-        }       
+        } 
+        
+        /**
+         * @Route("admin/supprime/image/{id}", name="supprimer_image", methods="DELETE")
+         */
+        public function supprimeImage(Image $image, Request $request,EntityManagerInterface $entityManager){
+            $data = json_decode($request->getContent(), true);
+            //on vérifie si le token est valide
+            if($this->isCsrfTokenValid('delete'.$image->getId(),$data['_token'])){
+                //on récupère le nom de l'image
+                $nom = $image->getUrlImage();
+                //on supprime le fichier
+                unlink($this->getParameter('images_directory').'/'.$nom);
+                //on  supprime de la base
+                $entityManager->remove($image);
+                $entityManager->flush();
+                //on répond en json 
+                return new JsonResponse(['success'=>1]);
+            }else{
+                return new JsonResponse(['error'=>'token invalide'],400);
+            }
+        }
 }

@@ -2,25 +2,25 @@
 
 namespace App\Repository;
 
-use App\Entity\TypeImage;
+use App\Entity\TypeClient;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method TypeImage|null find($id, $lockMode = null, $lockVersion = null)
- * @method TypeImage|null findOneBy(array $criteria, array $orderBy = null)
- * @method TypeImage[]    findAll()
- * @method TypeImage[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method TypeClient|null find($id, $lockMode = null, $lockVersion = null)
+ * @method TypeClient|null findOneBy(array $criteria, array $orderBy = null)
+ * @method TypeClient[]    findAll()
+ * @method TypeClient[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class TypeImageRepository extends ServiceEntityRepository
+class TypeClientRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, TypeImage::class);
+        parent::__construct($registry, TypeClient::class);
     }
 
     // /**
-    //  * @return TypeImage[] Returns an array of TypeImage objects
+    //  * @return TypeClient[] Returns an array of TypeClient objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class TypeImageRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?TypeImage
+    public function findOneBySomeField($value): ?TypeClient
     {
         return $this->createQueryBuilder('t')
             ->andWhere('t.exampleField = :val')

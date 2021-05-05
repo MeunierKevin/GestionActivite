@@ -7,6 +7,7 @@ use App\Entity\Image;
 use App\Entity\Client;
 use App\Entity\Projet;
 use App\Entity\TypeImage;
+use App\Entity\TypeClient;
 use App\Entity\TypeProjet;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -27,7 +28,7 @@ class AppFixtures extends Fixture
 
         $types = [$typeImage1,$typeImage2];
 
-        //CREATION DE TYPES DE DE PROJETS
+        //CREATION DE TYPES DE PROJETS
         $typeProjet1 = new TypeProjet();
         $typeProjet1->setLibelle("Nouveau Site");
         $manager->persist($typeProjet1);
@@ -36,7 +37,27 @@ class AppFixtures extends Fixture
         $typeProjet2->setLibelle("Refonte");
         $manager->persist($typeProjet2);
 
-        $typesProjet = [$typeProjet1,$typeProjet2];
+        $typeProjet3 = new TypeProjet();
+        $typeProjet3->setLibelle("Maintenance");
+        $manager->persist($typeProjet3);
+
+        $typesProjet = [$typeProjet1,$typeProjet2,$typeProjet3];
+
+         //CREATION DE TYPES DE CLIENTS
+
+        $typeClient1 = new TypeClient();
+        $typeClient1->setLibelle("Partenaire");
+        $manager->persist($typeClient1);
+
+        $typeClient2 = new TypeClient();
+        $typeClient2->setLibelle("Réseaux Sociaux");
+        $manager->persist($typeClient2);
+
+        $typeClient3 = new TypeClient();
+        $typeClient3->setLibelle("Personnel");
+        $manager->persist($typeClient3);
+
+        $typesClient = [$typeClient1,$typeClient2,$typeClient3];
 
         //CREATION DE CLIENTS
         $faker = Factory::create('fr_FR');
@@ -51,6 +72,7 @@ class AppFixtures extends Fixture
             $telephone = $faker->phoneNumber();
             $email = $faker->email();
             $presentation = $faker->text(2000);
+            $typeClient = $typesClient[mt_rand(0,count($typesClient)-1)];
 
             $client->setNomEntreprise($nomEntreprise)
                     ->setPrenomContact($prenom)
@@ -58,7 +80,8 @@ class AppFixtures extends Fixture
                     ->setAdresse($adresse)
                     ->setTelephone($telephone)
                     ->setEmail($email)
-                    ->setPresentationEntreprise($presentation);
+                    ->setPresentationEntreprise($presentation)
+                    ->setTypeClient($typeClient);
 
             $manager->persist($client);
 
