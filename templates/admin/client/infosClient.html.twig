@@ -1,0 +1,56 @@
+{% extends "admin/base.html.twig" %}
+
+{% block title %}Mon Actitivité - Informations Client{% endblock %}
+
+{% block titrePage %}
+  Informations de
+  {{client.nomEntreprise}}
+{% endblock %}
+{% block body %}
+  <div class="container justify-content-center d-flex mt-5">
+    <div class="row">
+      <div class="col-2">
+        <a href="{{path('admin_client_modification', {'id': client.id})}}" class="btn btn-warning font-weight-bold">
+          <i class="fas fa-edit"></i>
+          Modifier
+        </a>
+        <form action="{{path('admin_client_suppression', {'id': client.id})}}" method="post" onsubmit="return confirm('Etes-vous sûr de vouloir supprimer ce client ?')">
+          <input type="hidden" name="_method" value="delete">
+          <input type="hidden" name="_token" value="{{csrf_token('SUP' ~ client.id) }}">
+          <button type="submit" class="btn btn-danger font-weight-bold mt-5">
+            <i class="fas fa-trash-alt"></i>
+            Supprimer
+          </button>
+        </form>
+        <a href="#" class="btn btn-info font-weight-bold mt-5">
+          <i class="fas fa-download"></i>
+          Télécharger</a>
+      </div>
+      <div class="col-8">
+        <div class="card text-white bg-dark mb-3">
+          <div class="card-header">{{'Client n°' ~ client.id ~ ' | ' ~ client.nomEntreprise}}</div>
+          <div class="card-body">
+            <h4 class="card-title">Informations</h4>
+            <p class="card-text">
+              <i class="fas fa-id-card mr-3"></i>Contact :
+              {{ client.prenomContact ~ ' ' ~ client.nomContact }}</p>
+            <p class="card-text">
+              <i class="fas fa-map-marked-alt mr-3"></i>Adresse :
+              {{ client.adresse  }}</p>
+            <p class="card-text">
+              <i class="fas fa-phone mr-3"></i>Téléphone :
+              {{ client.telephone  }}</p>
+            <p class="card-text">
+              <i class="fas fa-envelope mr-3"></i>Email :
+              {{ client.email  }}</p>
+            <p class="card-text">
+              <i class="fas fa-info-circle mr-3"></i>Présentation :
+              {{ client.presentationEntreprise  }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-2"></div>
+    </div>
+
+  </div>
+{% endblock %}

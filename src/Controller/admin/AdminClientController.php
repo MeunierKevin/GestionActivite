@@ -49,6 +49,16 @@ class AdminClientController extends AbstractController
             "isModification"=>$client->getId() !==null
         ]);
     }
+
+        /**
+         * @Route("/admin/client/{id}/infos", name="admin_client_infos")
+         */
+        public function afficheInfos(Client $client){
+            return $this->render("admin/client/infosClient.html.twig",[
+                'client'=>$client
+            ]);
+        }
+
         /**
          * @Route("/admin/client/{id}", name="admin_client_suppression", methods="delete")
          */

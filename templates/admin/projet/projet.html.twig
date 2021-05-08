@@ -21,6 +21,7 @@
         <tr>
           <th scope="col">Client</th>
           <th scope="col">Type</th>
+          <th scope="col">Voir</th>
           <th scope="col">Modifier</th>
           <th scope="col">Supprimer</th>
         </tr>
@@ -33,11 +34,16 @@
             </th>
             <td>{{projet.typeProjet.libelle}}</td>
             <td>
+              <a href="" class="btn btn-dark">
+                <i class="fas fa-eye"></i>
+              </a>
+            </td>
+            <td class="text-center">
               <a href="{{path('admin_projet_modification', {'id': projet.id})}}" class="btn btn-warning">
                 <i class="fas fa-edit"></i>
               </a>
             </td>
-            <td>
+            <td class="text-center">
               <form action="{{path('admin_projet_suppression',{'id':projet.id}) }}" method="post" onsubmit="return confirm('Etes-vous sûr de vouloir supprimer ce projet ?')">
                 <input type="hidden" name="_method" value="delete">
                 <input type="hidden" name="_token" value="{{csrf_token('SUP' ~ projet.id) }}">

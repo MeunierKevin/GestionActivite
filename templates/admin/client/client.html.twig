@@ -23,6 +23,7 @@
           <th scope="col">Contact</th>
           <th scope="col">Téléphone</th>
           <th scope="col">Email</th>
+          <th scope="col">Voir</th>
           <th scope="col">Modifier</th>
           <th scope="col">Supprimer</th>
         </tr>
@@ -37,11 +38,16 @@
             <td>{{client.telephone}}</td>
             <td>{{client.email}}</td>
             <td>
+              <a href="{{ path('admin_client_infos', {'id':client.id}) }}" class="btn btn-dark">
+                <i class="fas fa-eye"></i>
+              </a>
+            </td>
+            <td class="text-center">
               <a href="{{path('admin_client_modification', {'id': client.id})}}" class="btn btn-warning">
                 <i class="fas fa-edit"></i>
               </a>
             </td>
-            <td>
+            <td class="text-center">
               <form action="{{path('admin_client_suppression', {'id': client.id})}}" method="post" onsubmit="return confirm('Etes-vous sûr de vouloir supprimer ce client ?')">
                 <input type="hidden" name="_method" value="delete">
                 <input type="hidden" name="_token" value="{{csrf_token('SUP' ~ client.id) }}">
