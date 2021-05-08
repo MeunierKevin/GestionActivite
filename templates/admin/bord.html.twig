@@ -133,8 +133,13 @@
       </div>
     </div>
   </div>
+
+  <div class="data" data-client-part="{{ stats.clientPart }}" data-client-rs="{{ stats.clientReseaux }}" data-client-perso="{{ stats.clientPerso }}"></div>
 {% endblock %}
 {% block javascripts %}
+
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="{{asset('js/bord.js')}}"></script>
+  <script></script>
+
 {% endblock %}

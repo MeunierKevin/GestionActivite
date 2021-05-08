@@ -73,10 +73,17 @@ const config2 = {
     }
   },
 };
+
     var myChart2 = new Chart(document.getElementById('myChart2'), config2);
 
      /** CHART3 */
 
+    var camembert = document.querySelector('.data');
+    var part = camembert.dataset.clientPart;
+    var perso = camembert.dataset.clientPerso;
+    var rs = camembert.dataset.clientRs;
+
+ 
     data3 = {
       labels: [
         'Partenaire', 'Réseaux sociaux', 'Personnel'
@@ -85,7 +92,7 @@ const config2 = {
         {
           label: 'Origine client',
           data: [
-            10, 50, 100
+            part, rs, perso
           ],
           backgroundColor: [
             'rgb(255, 99, 132)', 'rgb(54, 162, 235)', 'rgb(255, 205, 86)'
@@ -101,3 +108,5 @@ const config2 = {
     };
 
     var myChart3 = new Chart(document.getElementById('myChart3'), config3);
+
+    
