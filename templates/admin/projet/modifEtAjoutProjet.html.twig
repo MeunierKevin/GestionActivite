@@ -10,11 +10,18 @@
   {% endif %}
 {% endblock %}
 {% block body %}
+  <div class="bg-info w-100 text-white d-flex">
+    {% if isModification %}
+      <div>
+        <a href="" class="btn btn-warning font-weight-bold">Télécharger</a>
+      </div>
+    {% endif %}
+    <div class="mx-auto">
+      <p class="h3 m-0">INFORMATIONS GENERALES</p>
+    </div>
+  </div>
   {{form_start(form)}}
   <div class="container-fluid">
-    <div class="bg-info w-100 text-white text-center">
-      <p class="h3">INFORMATIONS GENERALES</p>
-    </div>
     <div class="row">
       <div class="col-6">
         {{form_row(form.analyseExistant)}}
@@ -39,35 +46,39 @@
       </div>
     </div>
   </div>
-  <div class="row">
-    <div class="col-6">
-      <div class="bg-info w-100 text-white text-center">
-        <p class="h3">PLANNING SOUHAITE</p>
-      </div>
-      <div class="row">
-        <div class="col-6">
-          {{form_row(form.dateMaquette)}}
-          {{form_row(form.dateDeveloppement)}}
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-6">
+        <div class="bg-info w-100 text-white text-center">
+          <p class="h3">PLANNING SOUHAITE</p>
         </div>
-        <div class="col-6">
-          {{form_row(form.dateTests)}}
-          {{form_row(form.dateMiseEnLigne)}}
-        </div>
-      </div>
-    </div>
-    <div class="col-6">
-      <div class="bg-info w-100 text-white text-center">
-        <p class="h3 m-0">FICHIERS DU PROJET</p>
-      </div>
-      <div class="mt-5 w-100">{{form_row(form.images)}}</div>
-      {% if isModification %}
-        {% for image in projet.images %}
-          <div>
-            <a href="{{asset('uploads/projets/' ~ image.urlImage)}}"><img src="{{asset('uploads/projets/' ~ image.urlImage)}}" alt="image" width="150" height="150"></a>
-            <a href="{{path('supprimer_image', {'id':image.id})}}" data-delete="" data-token="{{ csrf_token('delete' ~ image.id) }}" class="btn btn-danger font-weight-bold">X</a>
+        <div class="row">
+          <div class="col-6">
+            {{form_row(form.dateMaquette)}}
+            {{form_row(form.dateDeveloppement)}}
           </div>
-        {% endfor %}
-      {% endif %}
+          <div class="col-6">
+            {{form_row(form.dateTests)}}
+            {{form_row(form.dateMiseEnLigne)}}
+          </div>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="bg-info w-100 text-white text-center">
+          <p class="h3 m-0">FICHIERS DU PROJET</p>
+        </div>
+        <div class="mt-5 w-100">{{form_row(form.images)}}</div>
+        {% if isModification %}
+          <div class="row">
+            {% for image in projet.images %}
+              <div class="col-4">
+                <a href="{{asset('uploads/projets/' ~ image.urlImage)}}"><img src="{{asset('uploads/projets/' ~ image.urlImage)}}" alt="image" width="150" height="150"></a>
+                <a href="{{path('supprimer_image', {'id':image.id})}}" data-delete="" data-token="{{ csrf_token('delete' ~ image.id) }}" class="btn btn-danger font-weight-bold my-2">X</a>
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
     </div>
   </div>
   <div class="d-flex justify-content-center mt-3">

@@ -11,11 +11,12 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AdminProjetController extends AbstractController
 {
+
     /**
      * @Route("/admin/projet", name="admin_projet")
      */
@@ -27,7 +28,7 @@ class AdminProjetController extends AbstractController
         ]);
     }
 
-    /**
+     /**
      * @Route("/admin/projet/creation", name="admin_projet_creation")
      * @Route("/admin/projet/{id}", name="admin_projet_modification", methods="GET|POST")
      */
@@ -81,6 +82,7 @@ class AdminProjetController extends AbstractController
                 return $this->redirectToRoute("admin_projet");
             }
         } 
+
         
         /**
          * @Route("admin/supprime/image/{id}", name="supprimer_image", methods="DELETE")
@@ -102,4 +104,23 @@ class AdminProjetController extends AbstractController
                 return new JsonResponse(['error'=>'token invalide'],400);
             }
         }
+
+        /**
+         * @Route("admin/projet/export", name="admin_projet_export")
+         */
+        public function exportProjet(){
+            $projets = array (
+                array('aaa', 'bbb', 'ccc', 'dddd'),
+                array('123', '456', '789'),
+                array('"aaa"', '"bbb"')
+                );
+
+                $fp = fopen('projets.csv', 'w');
+
+                foreach ($projets as $fields) {
+                    fputcsv($fp, $fields);
+                }
+                fclose($fp);
+        }
+        
 }

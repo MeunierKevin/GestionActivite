@@ -7,6 +7,19 @@ body{
     height: 100px;
 }
 
+.statsBord i{
+  font-size: 30px;
+}
+
+.progress{
+  height: 30px;
+}
+
+.camembert{
+  height: 317px !important;
+  width: 400px !important;
+}
+
 /* Style the sidebar - fixed full height */
 .sidebar {
   height: 100%;
