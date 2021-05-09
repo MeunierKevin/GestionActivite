@@ -106,6 +106,15 @@ class AdminProjetController extends AbstractController
         }
 
         /**
+         * @Route("admin/projet/{id}/infos", name="admin_projet_infos")
+         */
+        public function afficheInfos(Projet $projet){
+            return $this->render("admin/projet/infosProjet.html.twig",[
+                'projet'=>$projet
+            ]);
+        }
+
+        /**
          * @Route("admin/projet/export", name="admin_projet_export")
          */
         public function exportProjet(){

@@ -1,0 +1,153 @@
+{% extends "admin/base.html.twig" %}
+
+{% block title %}Mon Actitivité - Informations Projet{% endblock %}
+{% block stylesheets %}
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+{% endblock %}
+{% block titrePage %}
+  Informations du projet n°
+  {{projet.id ~ ' pour '~ projet.client.nomEntreprise}}
+{% endblock %}
+{% block body %}
+  <div class="container-fluid">
+    <div class="row">
+      <a href="" class="btn btn-warning font-weight-bold mr-3 ml-3">
+        <i class="fas fa-edit"></i>
+        Modifier
+      </a>
+      <form action="" method="post" onsubmit="return confirm('Etes-vous sûr de vouloir supprimer ce client ?')">
+        <input type="hidden" name="_method" value="delete">
+        <input type="hidden" name="_token" value="">
+        <button type="submit" class="btn btn-danger font-weight-bold mr-3">
+          <i class="fas fa-trash-alt"></i>
+          Supprimer
+        </button>
+      </form>
+      <a href="#" class="btn btn-info font-weight-bold">
+        <i class="fas fa-download"></i>
+        Télécharger</a>
+    </div>
+
+    <div class="row mt-2">
+      <div class="col-6">
+        <div class="card text-white bg-dark mb-3">
+          <div class="card-header">{{'Client n°' ~ projet.client.id ~ ' | ' ~ projet.client.nomentreprise}}</div>
+          <div class="card-body">
+            <h4 class="card-title">Informations</h4>
+            <p class="card-text">
+              <i class="fas fa-id-card mr-3"></i>Contact :
+              {{ projet.client.prenomContact ~ ' ' ~ projet.client.nomContact }}</p>
+            <p class="card-text">
+              <i class="fas fa-map-marked-alt mr-3"></i>Adresse :
+              {{ projet.client.adresse  }}</p>
+            <p class="card-text">
+              <i class="fas fa-phone mr-3"></i>Téléphone :
+              {{ projet.client.telephone  }}</p>
+            <p class="card-text">
+              <i class="fas fa-envelope mr-3"></i>Email :
+              {{ projet.client.email  }}</p>
+            <p class="card-text">
+              <i class="fas fa-info-circle mr-3"></i>Présentation :
+              <br>
+              {{ projet.client.presentationEntreprise  }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="card bg-light mb-3">
+          <div class="card-header">{{'Projet n°' ~ projet.id ~ ' | ' ~ projet.typeProjet.libelle}}</div>
+          <div class="card-body">
+            <h4 class="card-title">Planning</h4>
+            <div class="row">
+              <div class="col-6">
+                <p class="card-text">
+                  <i class="fas fa-calendar-alt mr-3"></i>
+                  Maquette :
+                  {{ projet.dateMaquette | date("m/d/Y") }}
+                </p>
+                <p class="card-text">
+                  <i class="fas fa-calendar-alt mr-3"></i>
+                  Tests :
+                  {{ projet.dateTests | date("m/d/Y") }}
+                </p>
+              </div>
+              <div class="col-6">
+                <p class="card-text">
+                  <i class="fas fa-calendar-alt mr-3"></i>
+                  Développement :
+                  {{ projet.dateDeveloppement | date("m/d/Y") }}
+
+                </p>
+                <p class="card-text">
+                  <i class="fas fa-calendar-alt mr-3"></i>
+                  Mise en ligne :
+                  {{ projet.dateMiseEnLigne | date("m/d/Y") }}
+                </p>
+              </div>
+            </div>
+            <h4 class="card-title mt-3">Descriptif</h4>
+            <div id="accordion">
+              <h3>Analyse de l'existant</h3>
+              <div>
+                <p>
+                  {{projet.analyseExistant}}
+                </p>
+              </div>
+              <h3>Objectifs du site</h3>
+              <div>
+                <p>
+                  {{projet.objectifsDuSite}}
+                </p>
+              </div>
+              <h3>Cibles</h3>
+              <div>
+                <p>
+                  {{projet.cibles}}
+                </p>
+              </div>
+              <h3>Fonctionnalités</h3>
+              <div>
+                <p>
+                  {{projet.charteGraphique}}
+                </p>
+              </div>
+              <h3>Cibles</h3>
+              <div>
+                <p>
+                  {{projet.cibles}}
+                </p>
+              </div>
+              <h3>Contenus du site</h3>
+              <div>
+                <p>
+                  {{projet.contenuDuSite}}
+                </p>
+              </div>
+              <h3>Maquettage</h3>
+              <div>
+                <p>
+                  {{projet.maquettage}}
+                </p>
+              </div>
+              <h3>Prestations - Devis</h3>
+              <div>
+                <p>
+                  {{projet.prestationsDevis}}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
+{% block javascripts %}
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script>
+    $(function () {
+      $("#accordion").accordion({collapsible: true, active: false});
+    });
+  </script>
+{% endblock %}

@@ -34,7 +34,7 @@
             </th>
             <td>{{projet.typeProjet.libelle}}</td>
             <td>
-              <a href="" class="btn btn-dark">
+              <a href="{{ path('admin_projet_infos', {'id': projet.id}) }}" class="btn btn-dark">
                 <i class="fas fa-eye"></i>
               </a>
             </td>
